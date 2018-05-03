@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>HistoToolKit Graph</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/graph.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="master" class="center-items">
+        <div id="options">
+            <div id="dropdown-1" class="dropdown">
+                <div id="header-1" class="dropdown-header">
+                    <div id="button-1" class="dropdown-icon center-items">🠷</div>
+                    <div class="dropdown-name hcenter-items">Ops Graph</div>
+                </div>
+            </div>
+            <div id="options-1" class="dropdown-options">
+                <div id="simple-graph-button">Simple Graph</div>
+                <div id="complex-graph-button">Complex Graph</div>
+                <div id="run-button">Run</div>
+            </div>
+        </div>
+        <div id="viewer">
+            <div id="content">
+              <canvas id="graphCanvas" resize></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/paper-full.min.js') }}"></script>
+    <script type="text/paperscript" canvas="graphCanvas" src="{{ url_for('static', filename='js/graph.js') }}"></script>
+  </body>
+</html>

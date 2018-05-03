@@ -1,0 +1,110 @@
+html, body {
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    font-family: 'Open Sans', sans-serif;
+}
+
+canvas[resize] {
+    width: 100%;
+    height: 100%;
+}
+
+#master {
+    width: 100%;
+    height: 100%;
+}
+
+.center-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hcenter-items {
+    display: flex;
+    align-items: center;
+}
+
+#options {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 95%;
+
+    border: 1px solid black;
+
+    float: left;
+}
+
+    .dropdown {
+        width: 100%;
+        height: 5%;
+
+        border-bottom: 1px solid black;
+    }
+
+    .dropdown-header {
+        height: 100%;
+        width: 100%;
+    }
+
+    .dropdown-icon {
+        height: 100%;
+        width: 10%;
+
+        float: left;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .dropdown-name {
+        width: 85%;
+        height: 100%;
+
+        padding-left: 5%;
+        font-size: 20px;
+    }
+
+    .dropdown-options {
+        height: 95%;
+        width: 100%;
+        overflow-y: auto;
+
+        background-color: white;
+    }
+
+    .dropdown-options > div {
+        margin: 0;
+        background-color: white;
+    }
+
+    #run-button {
+        color: white;
+        background-color: red;
+    }
+
+    .do-show {
+        border-bottom: 1px solid black;
+    }
+
+#viewer {
+    width: 75%;
+    height: 95%;
+
+    margin-left: 1em;
+
+    border: 1px solid black;
+    flex-direction: column;
+}
+
+    #content {
+        position: relative;
+        height: 95%;
+        width: 100%;
+    }
