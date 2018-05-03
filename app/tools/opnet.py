@@ -2,12 +2,12 @@ from random import randint
 
 class OpNet:
     """
-    Manager class for all created nodes, ports, and conduits.
+    Manager class for all created nodes, ports, and pipes.
     """
 
     def __init__(self):
         self.nodes = []
-        self.conduits = []
+        self.pipes = []
 
     def add_node(self, op, params, outputs, name=None):
         """
@@ -22,18 +22,18 @@ class OpNet:
 
     def remove_node(self, node):
         """
-        Unbind conduits attached to node and remove node from net.
+        Unbind pipes attached to node and remove node from net.
         """
 
         for param in node.params:
-            if isinstance(param._value, Conduit):
+            if isinstance(param._value, Pipe):
                 self.unbind(param._value)
 
         for output in node.outputs:
-            if isinstance(output._value, Conduit):
+            if isinstance(output._value, Pipe):
                 self.unbind(output._value)
 
-        # remove conduit from opnet internal list
+        # remove pipe from opnet internal list
         located = False
         for idx, n in enumerate(self.nodes):
             if n is node:
@@ -47,82 +47,82 @@ class OpNet:
         node = None
         return node
 
-    def _add_conduit(self, node1_output, node2_param):
+    def _add_pipe(self, node1_output, node2_param):
         """
-        Add new conduit to net.
-        """
-
-        conduit = Conduit(node1_output, node2_param)
-        self.conduits.append(conduit)
-        return conduit
-
-    def _remove_conduit(self, conduit):
-        """
-        Unbind conduit and remove from net.
+        Add new pipe to net.
         """
 
-        # remove conduit from references in its bound parameters
-        conduit.source._value = None
-        conduit.output._value = None
+        pipe = Pipe(node1_output, node2_param)
+        self.pipes.append(pipe)
+        return pipe
 
-        # remove references to parameters from conduit
-        conduit.source = None
-        conduit.output = None
+    def _remove_pipe(self, pipe):
+        """
+        Unbind pipe and remove from net.
+        """
 
-        # remove conduit from opnet internal list
+        # remove pipe from references in its bound parameters
+        pipe.source._value = None
+        pipe.output._value = None
+
+        # remove references to parameters from pipe
+        pipe.source = None
+        pipe.output = None
+
+        # remove pipe from opnet internal list
         located = False
-        for idx, c in enumerate(self.conduits):
-            if c is conduit:
-                del self.conduits[idx]
+        for idx, c in enumerate(self.pipes):
+            if c is pipe:
+                del self.pipes[idx]
                 located = True
                 break
 
         if not located:
-            raise ValueError("conduit not found in this instance of OpNet.")
+            raise ValueError("pipe not found in this instance of OpNet.")
 
     def bind(self, node1, node1_output_name, node2, node2_param_name):
         """
-        Connect OUTPUT_NAME of NODE1 to PARAM_NAME of NODE2 via a new conduit.
+        Connect OUTPUT_NAME of NODE1 to PARAM_NAME of NODE2 via a new pipe.
         """
 
         node1_output = node1.get_output(node1_output_name)
         node2_param = node2.get_param(node2_param_name)
 
-        return self._add_conduit(node1_output, node2_param)
+        return self._add_pipe(node1_output, node2_param)
 
-    def unbind(self, conduit):
+    def unbind(self, pipe):
         """
-        Disconnect ports from conduit and remove conduit from net.
+        Disconnect ports from pipe and remove pipe from net.
         """
 
-        self._remove_conduit(conduit)
+        self._remove_pipe(pipe)
 
-        # set conduit to None
-        conduit = None
-        return conduit
+        # set pipe to None
+        pipe = None
+        return pipe
 
     def get_root_nodes(self):
         """
-        Return list of nodes that have non-conduit inputs.
+        Return list of nodes that have non-pipe inputs.
         """
 
         rootnodes = []
         for node in self.nodes:
-            if any(not isinstance(p._value, Conduit) for p in node.params):
+            if any(not isinstance(p._value, Pipe) for p in node.params):
                 rootnodes.append(node)
 
         return rootnodes
 
-    def _walk_conduits_for_depth(self, node, depth=0):
+    def _walk_pipes_for_depth(self, node, depth=0):
         """
-        Traverse output conduits from node to determine depth of node.
+        Traverse output pipes from node to determine depth of node.
         """
 
         new_depth = depth
         for output in node.outputs:
-            if isinstance(output._value, Conduit):
+            if isinstance(output._value, Pipe):
                 dest_node = output._value.output.node
-                new_depth = min(depth, self._walk_conduits_for_depth(dest_node, depth + 1))
+                new_depth = min(depth, self._walk_pipes_for_depth(dest_node, depth + 1))
             
         node.depth = new_depth
         return new_depth
@@ -135,7 +135,7 @@ class OpNet:
         rootnodes = self.get_root_nodes()
 
         for rootnode in rootnodes:
-            self._walk_conduits_for_depth(rootnode)
+            self._walk_pipes_for_depth(rootnode)
 
     def run(self):
         """
@@ -168,7 +168,7 @@ class Node:
             name: Name to identify this Node.
             params: Dictionary of parameters to function defined in 'op'. The key 
                 is the name of the parameter and the value is its assigned value. 
-                Set to None if you intend to connect a conduit to it.
+                Set to None if you intend to connect a pipe to it.
             outputs: List of strings with arbitrary names for ordered outputs of 
                 function 'op'.
         """
@@ -289,7 +289,7 @@ class Port:
         Return value stored at this port.
         """
 
-        if isinstance(self._value, Conduit):
+        if isinstance(self._value, Pipe):
             return self._value.value
         else:
             return self._value
@@ -299,7 +299,7 @@ class Port:
         Set value stored at this port.
         """
 
-        if isinstance(self._value, Conduit):
+        if isinstance(self._value, Pipe):
             self._value.value = value
         else:
             self._value = value
@@ -318,7 +318,7 @@ class Output(Port):
 
     pass
 
-class Conduit:
+class Pipe:
     """
     Manages a connection between the Output of a given Node and the Param of 
     another Node.
