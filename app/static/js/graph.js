@@ -163,6 +163,7 @@ function Node(op, n_inputs, n_outputs, position, node_props, box_props) {
     });
     assignProperties(node_depth_path, node_depth_defaults);
     node_depth_path.bringToFront();
+    this.depth_label = node_depth_path;
 
     // create group for all items
     this.group = new Group([box, disp_name_path, node_depth_path]);
@@ -244,8 +245,10 @@ function openSimpleGraph() {
 function openComplexGraph() {
     active_graph = '/run-complex-graph';
 
+    pipes.clear();
     nodes.clear();
-    console.log(active_graph);
+
+    
 }
 
 function run() {
@@ -257,7 +260,10 @@ function run() {
             'input_val': 2
         },
         success: function(response) {
-            console.log(response);
+            for (var i = 0; i < response['depths'].length; i++) {
+                nodes[i].depth_label.content = response['depths'][i];
+            }
+            document.getElementById('float-result').innerHTML = response['output'];
         }
     });
 }
