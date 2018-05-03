@@ -159,7 +159,7 @@ function Node(op, n_inputs, n_outputs, position, node_props, box_props) {
                           position[1] + box_h / 2 + d_off[1]];
     var node_depth_path = new PointText({
         point: depth_position,
-        content: "null"  
+        content: "?"  
     });
     assignProperties(node_depth_path, node_depth_defaults);
     node_depth_path.bringToFront();
@@ -230,12 +230,15 @@ var pipes = [];
 function openSimpleGraph() {
     active_graph = '/run-simple-graph';
 
+    pipes.clear();
     nodes.clear();
+
     nodes.push(new Node('double', 1, 1, [100, 100], node_defaults, box_defaults));
     nodes.push(new Node('double', 1, 1, [300, 100], node_defaults, box_defaults));
     nodes.push(new Node('double', 1, 1, [500, 100], node_defaults, box_defaults));
 
-    console.log(active_graph);
+    pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[2].inputs[0]));
 }
 
 function openComplexGraph() {
@@ -247,10 +250,13 @@ function openComplexGraph() {
 
 function run() {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: active_graph,
         async: true,
-        success: function(response){
+        data: {
+            'input_val': 2
+        },
+        success: function(response) {
             console.log(response);
         }
     });
