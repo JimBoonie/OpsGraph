@@ -274,6 +274,7 @@ var user_inputs = [];
 function openSimpleGraph() {
     active_graph = '/run-simple-graph';
 
+    document.getElementById('float-result').innerHTML = "";
     pipes.clear();
     nodes.clear();
     user_inputs = [];
@@ -295,6 +296,7 @@ function openSimpleGraph() {
 function openComplexGraph() {
     active_graph = '/run-complex-graph';
 
+    document.getElementById('float-result').innerHTML = "";
     pipes.clear();
     nodes.clear();
     user_inputs = [];
