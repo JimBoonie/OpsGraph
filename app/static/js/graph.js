@@ -282,7 +282,8 @@ function run() {
         success: function(response) {
             console.log(response);
             for (var i = 0; i < response['depths'].length; i++) {
-                nodes[i].depth_label.content = response['depths'][i];
+                var depth = response['depths'][i];
+                nodes[i].depth_label.content = "(" + depth.toString() + ", " + i.toString() + ")";
             }
             document.getElementById('float-result').innerHTML = response['output'];
         }
