@@ -1,4 +1,4 @@
-import os
+import os, json
 from app import app
 from flask import request, render_template, jsonify
 from .tools import opnet
@@ -30,7 +30,8 @@ def run_simple_graph():
     pipe1 = graph.bind(node1, 'data', node2, 'data')
 
     # set first input of graph
-    input_val = int(request.form['input_val'])
+    formdata = json.loads(request.form['input_val'])
+    input_val = int(formdata[0])
     node0.get_param('data').set_value(input_val)
 
     # run graph
@@ -77,9 +78,11 @@ def run_complex_graph():
     pipe10 = graph.bind(node8, 'data', node5, 'data2')
 
     # set first inputs of graph
-    input_val = int(request.form['input_val'])
-    node0.get_param('data').set_value(input_val)
-    node4.get_param('data').set_value(input_val)
+    formdata = json.loads(request.form['input_val'])
+    input_val0 = int(formdata[0])
+    input_val1 = int(formdata[1])
+    node0.get_param('data').set_value(input_val0)
+    node4.get_param('data').set_value(input_val1)
 
     # run graph
     results = graph.run()

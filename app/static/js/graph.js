@@ -231,31 +231,65 @@ Array.prototype.clear = function() {
     }
 }
 
+function makeInputLabel(node, input_idx, text, props) {
+    var p_pos = node.inputs[input_idx].position;
+    var text_position = [p_pos.x + -20, p_pos.y + 10];
+    var text_path = new PointText({
+        point: text_position,
+        content: text
+    });
+    assignProperties(text_path, props);
+    node.group.addChild(text_path);
+    return text_path
+}
+
+function makeInputField(name, text, text_path) {
+    var item = document.createElement("div");
+    var label = document.createElement("div");
+    label.innerHTML = name;
+    item.append(label)
+
+    var input_field = document.createElement("input");
+    input_field.type = text;
+    input_field.name = name;
+    input_field.value = text;
+
+    input_field.addEventListener("focusout", function() {
+        text_path.content = this.value;
+    })
+    item.append(input_field);
+
+    var input_list = document.getElementById("float-inputs");
+    input_list.append(item);
+}
+
+function clearInputField() {
+    document.getElementById("float-inputs").innerHTML = "";
+}
+
 var active_graph = undefined;
 var nodes = [];
 var pipes = [];
+var user_inputs = [];
 function openSimpleGraph() {
     active_graph = '/run-simple-graph';
 
     pipes.clear();
     nodes.clear();
+    user_inputs = [];
 
-    nodes.push(new Node('double', 1, 1, [100, 100], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1, [300, 100], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1, [500, 100], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1, [150, 100], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1, [350, 100], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1, [550, 100], node_defaults, box_defaults));
 
     pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[2].inputs[0]));
 
     // add labels for inputs
-    var p_pos = nodes[0].inputs[0].position;
-    var text_position = [p_pos.x + -20, p_pos.y + 10];
-    var text_path = new PointText({
-        point: text_position,
-        content: "2"
-    });
-    assignProperties(text_path, port_val_defaults);
-    nodes[0].group.addChild(text_path);
+    clearInputField()
+    var text_path = makeInputLabel(nodes[0], 0, "", port_val_defaults);
+    user_inputs.push(text_path);
+    makeInputField("double", "", text_path);
 }
 
 function openComplexGraph() {
@@ -263,16 +297,17 @@ function openComplexGraph() {
 
     pipes.clear();
     nodes.clear();
+    user_inputs = [];
 
-    nodes.push(new Node('double', 1, 1,       [100, 100], node_defaults, box_defaults));
-    nodes.push(new Node('split', 2, 2,        [300, 100], node_defaults, box_defaults));
-    nodes.push(new Node('split', 2, 3,        [100, 400], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [500, 100], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1,       [100, 600], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [300, 600], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1,       [500, 600], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [500, 400], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [750, 250], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1,       [150, 100], node_defaults, box_defaults));
+    nodes.push(new Node('split', 2, 2,        [350, 100], node_defaults, box_defaults));
+    nodes.push(new Node('split', 2, 3,        [150, 400], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [550, 100], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1,       [150, 600], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [350, 600], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1,       [550, 600], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [550, 400], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [800, 250], node_defaults, box_defaults));
 
     pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[3].inputs[0]));
@@ -287,32 +322,30 @@ function openComplexGraph() {
     pipes.push(new Pipe(pipe_props, nodes[6].outputs[0], nodes[7].inputs[1]));
 
     // add labels for inputs
-    var p_pos = nodes[1].inputs[1].position;
-    var text_position = [p_pos.x + -20, p_pos.y + 10];
-    var text_path = new PointText({
-        point: text_position,
-        content: "2"
-    });
-    assignProperties(text_path, port_val_defaults);
-    nodes[1].group.addChild(text_path);
+    clearInputField()
+    var text_path = makeInputLabel(nodes[0], 0, "", port_val_defaults);
+    user_inputs.push(text_path);
+    makeInputField("double", "", text_path);
+    var text_path = makeInputLabel(nodes[2], 0, "", port_val_defaults);
+    user_inputs.push(text_path);
+    makeInputField("double", "", text_path);
 
-    var p_pos = nodes[2].inputs[1].position;
-    var text_position = [p_pos.x + -20, p_pos.y + 10];
-    var text_path = new PointText({
-        point: text_position,
-        content: "3"
-    });
-    assignProperties(text_path, port_val_defaults);
-    nodes[2].group.addChild(text_path);
+
+    makeInputLabel(nodes[1], 1, "2", port_val_defaults);
+    makeInputLabel(nodes[2], 1, "3", port_val_defaults);
 }
 
 function run() {
+    var input_vals = [];
+    for (var i = 0; i < user_inputs.length; i++) {
+        input_vals.push(user_inputs[i].content);
+    }
     $.ajax({
         type: 'POST',
         url: active_graph,
         async: true,
         data: {
-            'input_val': 2
+            'input_val': JSON.stringify(input_vals)
         },
         success: function(response) {
             console.log(response);
