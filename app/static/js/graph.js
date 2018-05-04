@@ -303,13 +303,13 @@ function openComplexGraph() {
 
     nodes.push(new Node('double', 1, 1,       [150, 100], node_defaults, box_defaults));
     nodes.push(new Node('split', 2, 2,        [350, 100], node_defaults, box_defaults));
-    nodes.push(new Node('split', 2, 3,        [150, 400], node_defaults, box_defaults));
+    nodes.push(new Node('split', 2, 3,        [150, 300], node_defaults, box_defaults));
     nodes.push(new Node('add_together', 2, 1, [550, 100], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1,       [150, 600], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [350, 600], node_defaults, box_defaults));
-    nodes.push(new Node('double', 1, 1,       [550, 600], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [550, 400], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [800, 250], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1,       [150, 500], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [350, 500], node_defaults, box_defaults));
+    nodes.push(new Node('double', 1, 1,       [550, 500], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [550, 300], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [800, 150], node_defaults, box_defaults));
 
     pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[3].inputs[0]));
