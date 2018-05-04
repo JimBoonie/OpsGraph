@@ -31,7 +31,7 @@ def run_simple_graph():
 
     # set first input of graph
     formdata = json.loads(request.form['input_val'])
-    input_val = int(formdata[0])
+    input_val = float(formdata[0])
     node0.get_param('data').set_value(input_val)
 
     # run graph
@@ -79,8 +79,8 @@ def run_complex_graph():
 
     # set first inputs of graph
     formdata = json.loads(request.form['input_val'])
-    input_val0 = int(formdata[0])
-    input_val1 = int(formdata[1])
+    input_val0 = float(formdata[0])
+    input_val1 = float(formdata[1])
     node0.get_param('data').set_value(input_val0)
     node4.get_param('data').set_value(input_val1)
 

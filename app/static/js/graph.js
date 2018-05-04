@@ -350,12 +350,14 @@ function run() {
             'input_val': JSON.stringify(input_vals)
         },
         success: function(response) {
-            console.log(response);
             for (var i = 0; i < response['depths'].length; i++) {
                 var depth = response['depths'][i];
                 nodes[i].depth_label.content = "(" + depth.toString() + ", " + i.toString() + ")";
             }
             document.getElementById('float-result').innerHTML = response['output'];
+        }, 
+        error: function(jqXHR, textStatus, errorThrown) {
+            document.getElementById('float-result').innerHTML = "Error: use numeric inputs";
         }
     });
 }
