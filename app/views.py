@@ -57,7 +57,7 @@ def run_complex_graph():
     node1 = graph.add_node(split, {'data': None, 'n': 2}, ['data1', 'data2'])
     node2 = graph.add_node(add_together, {'data1': None, 'data2': None}, ['data'])
     node3 = graph.add_node(add_together, {'data1': None, 'data2': None}, ['data'])
-    node4 = graph.add_node(split, {'data': None, 'n': 2}, ['data1', 'data2', 'data3'])
+    node4 = graph.add_node(split, {'data': None, 'n': 3}, ['data1', 'data2', 'data3'])
     node5 = graph.add_node(add_together, {'data1': None, 'data2': None}, ['data'])
     node6 = graph.add_node(double, {'data': None}, ['data'])
     node7 = graph.add_node(add_together, {'data1': None, 'data2': None}, ['data'])
@@ -80,8 +80,6 @@ def run_complex_graph():
     input_val = int(request.form['input_val'])
     node0.get_param('data').set_value(input_val)
     node4.get_param('data').set_value(input_val)
-
-    print(node0.params)
 
     # run graph
     results = graph.run()

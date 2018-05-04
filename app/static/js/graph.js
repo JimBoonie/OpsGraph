@@ -250,25 +250,25 @@ function openComplexGraph() {
 
     nodes.push(new Node('double', 1, 1,       [100, 100], node_defaults, box_defaults));
     nodes.push(new Node('split', 2, 2,        [300, 100], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [500, 100], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [750, 250], node_defaults, box_defaults));
     nodes.push(new Node('split', 2, 3,        [100, 400], node_defaults, box_defaults));
-    nodes.push(new Node('add_together', 2, 1, [500, 400], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [500, 100], node_defaults, box_defaults));
     nodes.push(new Node('double', 1, 1,       [100, 600], node_defaults, box_defaults));
     nodes.push(new Node('add_together', 2, 1, [300, 600], node_defaults, box_defaults));
     nodes.push(new Node('double', 1, 1,       [500, 600], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [500, 400], node_defaults, box_defaults));
+    nodes.push(new Node('add_together', 2, 1, [750, 250], node_defaults, box_defaults));
 
     pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[2].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[2].outputs[0], nodes[3].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[1].outputs[1], nodes[7].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[4].outputs[0], nodes[2].inputs[1]));
-    pipes.push(new Pipe(pipe_props, nodes[4].outputs[1], nodes[5].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[4].outputs[2], nodes[6].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[5].outputs[0], nodes[3].inputs[1]));
+    pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[3].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[3].outputs[0], nodes[8].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[1].outputs[1], nodes[5].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[2].outputs[0], nodes[3].inputs[1]));
+    pipes.push(new Pipe(pipe_props, nodes[2].outputs[1], nodes[7].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[2].outputs[2], nodes[4].inputs[0]));
+    pipes.push(new Pipe(pipe_props, nodes[7].outputs[0], nodes[8].inputs[1]));
+    pipes.push(new Pipe(pipe_props, nodes[4].outputs[0], nodes[5].inputs[1]));
+    pipes.push(new Pipe(pipe_props, nodes[5].outputs[0], nodes[6].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[6].outputs[0], nodes[7].inputs[1]));
-    pipes.push(new Pipe(pipe_props, nodes[7].outputs[0], nodes[8].inputs[0]));
-    pipes.push(new Pipe(pipe_props, nodes[8].outputs[0], nodes[5].inputs[1]));
 }
 
 function run() {

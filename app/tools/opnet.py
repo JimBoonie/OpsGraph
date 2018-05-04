@@ -146,10 +146,16 @@ class OpNet:
         sorted_nodes = sorted(self.nodes, key=lambda x: x.depth)
         results = []
         for node in sorted_nodes:
+            print("!!!!!!!!!!!!!!!!!!!!!!!")
+            print(node.name)
+            for p in node.params:
+                print("{}: {}".format(p.name, p.get_value()))
             result = {
                 'node': node,
                 'outputs': node.execute()
             }
+            print(result)
+            print("Depth: {}".format(node.depth))
             results.append(result)
 
         return results
@@ -261,6 +267,7 @@ class Node:
 
         outs = self.op(**self.unpack_params())
         outs = ensure_is_listlike(outs)
+        print(outs)
 
         # store outputs as value
         for (s_out, out) in zip(self.outputs, outs):
