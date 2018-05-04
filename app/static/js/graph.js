@@ -28,6 +28,12 @@ var node_name_defaults = {
     fontSize: '1em'
 }
 
+var port_val_defaults = {
+    justification: 'right',
+    fillColor: 'green',
+    fontSize: '2em'
+}
+
 var node_depth_defaults = {
     justification: 'center',
     fillColor: 'white',
@@ -240,6 +246,16 @@ function openSimpleGraph() {
 
     pipes.push(new Pipe(pipe_props, nodes[0].outputs[0], nodes[1].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[1].outputs[0], nodes[2].inputs[0]));
+
+    // add labels for inputs
+    var p_pos = nodes[0].inputs[0].position;
+    var text_position = [p_pos.x + -20, p_pos.y + 10];
+    var text_path = new PointText({
+        point: text_position,
+        content: "2"
+    });
+    assignProperties(text_path, port_val_defaults);
+    nodes[0].group.addChild(text_path);
 }
 
 function openComplexGraph() {
@@ -269,6 +285,25 @@ function openComplexGraph() {
     pipes.push(new Pipe(pipe_props, nodes[4].outputs[0], nodes[5].inputs[1]));
     pipes.push(new Pipe(pipe_props, nodes[5].outputs[0], nodes[6].inputs[0]));
     pipes.push(new Pipe(pipe_props, nodes[6].outputs[0], nodes[7].inputs[1]));
+
+    // add labels for inputs
+    var p_pos = nodes[1].inputs[1].position;
+    var text_position = [p_pos.x + -20, p_pos.y + 10];
+    var text_path = new PointText({
+        point: text_position,
+        content: "2"
+    });
+    assignProperties(text_path, port_val_defaults);
+    nodes[1].group.addChild(text_path);
+
+    var p_pos = nodes[2].inputs[1].position;
+    var text_position = [p_pos.x + -20, p_pos.y + 10];
+    var text_path = new PointText({
+        point: text_position,
+        content: "3"
+    });
+    assignProperties(text_path, port_val_defaults);
+    nodes[2].group.addChild(text_path);
 }
 
 function run() {
