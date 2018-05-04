@@ -84,6 +84,7 @@ canvas[resize] {
         text-align: center;
         margin: 0;
         background-color: white;
+        border: 1px solid black;
     }
 
     .do-show {
@@ -119,7 +120,7 @@ canvas[resize] {
         border-top: 1px solid black;
         border-left: 1px solid black;
         border-top-left-radius: 1em;
-        background-color: yellow;
+        background-color: white;
     }
 
     #float-title {
@@ -135,6 +136,9 @@ canvas[resize] {
     #run-button {
         font-size: 1.5em;
         text-align: center;
+
         color: white;
         background-color: red;
+        border: 1px solid black;
+        border-radius: 0.5em;
     }

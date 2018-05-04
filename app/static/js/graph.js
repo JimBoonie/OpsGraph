@@ -330,7 +330,7 @@ function openComplexGraph() {
     makeInputField("double", "", text_path);
     var text_path = makeInputLabel(nodes[2], 0, "", port_val_defaults);
     user_inputs.push(text_path);
-    makeInputField("double", "", text_path);
+    makeInputField("split", "", text_path);
 
 
     makeInputLabel(nodes[1], 1, "2", port_val_defaults);
